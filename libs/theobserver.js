@@ -7,12 +7,12 @@
 class TheObserver {
   static ATTRIBUTES = "attributes";
   static CHILD_LIST = "childList";
-  static SUBTREE = "subtree";
+  static CHARACTER_DATA = "characterData";
 
   #supportedEvents = [
     TheObserver.ATTRIBUTES,
     TheObserver.CHILD_LIST,
-    TheObserver.SUBTREE,
+    TheObserver.CHARACTER_DATA,
   ];
 
   #target;
@@ -23,12 +23,12 @@ class TheObserver {
   /**
    * Creates an instance of TheObserver.
    * @param {Node} targetNode target DOM node to watch for changes
-   * @param {object} [config={ attributes: false, childList: false, subtree: false }] `MutationObserver` config
+   * @param {object} [config={ attributes: false, childList: false, characterData: false }] `MutationObserver` config
    * @memberof TheObserver
    */
   constructor(
     targetNode,
-    config = { attributes: false, childList: false, subtree: false }
+    config = { attributes: false, childList: false, characterData: false }
   ) {
     this.#target = targetNode;
     this.#config = config;
@@ -122,9 +122,9 @@ class TheObserver {
 
   /**
    * Sets new config and restarts the observer.
-   * @param {object} [config={ attributes: false, childList: false, subtree: false }] `MutationObserver` config
+   * @param {object} [config={ attributes: false, childList: false, characterData: false }] `MutationObserver` config
    */
-  setConfig(config = { attributes: false, childList: false, subtree: false }) {
+  setConfig(config = { attributes: false, childList: false, characterData: false }) {
     this.#config = config;
     this.stop();
     this.start();
