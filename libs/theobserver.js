@@ -37,7 +37,7 @@ class TheObserver {
   // Callback function for routing the events to all the registered listeners
   #mutationsRouter(mutationList, observer) {
     for (const event of this.#supportedEvents) {
-      if (this.#config[event]) {
+      if (this.#config[event] && this.#listeners[event]) {
         const filteredRecords = mutationList.filter(
           (record) => record.type === event
         );
