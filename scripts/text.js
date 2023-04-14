@@ -1,14 +1,27 @@
 // ==UserScript==
 // @name         Userscripts Tools - Text
 // @description  Misc tools to process text on web pages.
-// @version      0.2
+// @version      0.3
 // @author       ragnarøkkr
 // @match        *://*/*
+// @grant        GM_openInTab
 // @grant        GM_setClipboard
 // @grant        GM_registerMenuCommand
 // ==/UserScript==
 
 (() => {
+
+    // Map the browser language to the mostly expectable preferred 1st level domain
+    // WIP: currently it only supports Italy and US/UK variants. Add new mappings as
+    // required. 
+    const langToDomainMapper = lang => {
+        const mapping = {
+            'it-IT': 'it',
+            'en-US': 'com',
+            'en-UK': 'co.uk',
+        };
+        return mapping[lang] ?? 'com';
+    }
 
     // Converts the selected text to lowercase while preserving any HTML code contained in it.
     const replaceSelectedTextWithLowerCase = () => {
@@ -48,10 +61,23 @@
         copyPageTitle();
     };
 
+    // Search selected text on Amazon
+    const searchOnAmazon = () => {
+        const selectedText = window.getSelection().toString();
+        const lvl1domain = langToDomainMapper(navigator.language);
+        const searchUrl = `https://www.amazon.${lvl1domain}/s?k=${encodeURIComponent(selectedText)}`;
+        GM_openInTab(searchUrl);
+    };
+
+    const onClick_SearchOnAmazon = () => {
+        searchOnAmazon();
+    };
+
     // Registering the menu
     const menu = [
         { title: 'Convert selected text to lowercase (preserving HTML)', callback: onClick_ReplaceSelectedTextWithLowerCase, shortcut: 'l' },
-        { title: 'Copy current page\'s title into the clipboard', callback: onClick_CopyPageTitle, shortcut: 'c' }
+        { title: 'Copy current page\'s title into the clipboard', callback: onClick_CopyPageTitle, shortcut: 'c' },
+        { title: 'Search selected text on Amazon', callback: onClick_SearchOnAmazon, shortcut: 'a' },
     ];
 
     for (const menuItem of menu) {
