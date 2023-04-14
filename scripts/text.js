@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name         Userscripts Tools - Text
 // @description  Misc tools to process text on web pages.
-// @version      0.1
+// @version      0.2
 // @author       ragnarøkkr
 // @match        *://*/*
+// @grant        GM_setClipboard
 // @grant        GM_registerMenuCommand
 // ==/UserScript==
 
@@ -38,9 +39,19 @@
         replaceSelectedTextWithLowerCase();
     }
 
+    // Copy current active webpage's title into the clipboard
+    const copyPageTitle = () => {
+        GM_setClipboard(document.title);
+    };
+
+    const onClick_CopyPageTitle = () => {
+        copyPageTitle();
+    };
+
     // Registering the menu
     const menu = [
-        { title: 'Convert selected text to lowercase (preserving HTML)', callback: onClick_ReplaceSelectedTextWithLowerCase, shortcut: 'l' }
+        { title: 'Convert selected text to lowercase (preserving HTML)', callback: onClick_ReplaceSelectedTextWithLowerCase, shortcut: 'l' },
+        { title: 'Copy current page\'s title into the clipboard', callback: onClick_CopyPageTitle, shortcut: 'c' }
     ];
 
     for (const menuItem of menu) {
