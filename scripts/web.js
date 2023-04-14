@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         Userscripts Tools - Web
 // @description  Misc tools to process web pages.
-// @version      0.1
+// @version      0.1.1
 // @author       ragnarøkkr
 // @match        *://*/*
 // @grant        GM_openInTab
 // @grant        GM_registerMenuCommand
+// @noframes
 // ==/UserScript==
 
 (() => {
